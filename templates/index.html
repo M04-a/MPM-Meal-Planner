@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meal Plannerr</title>
+    <link rel="icon" type="image/png" href="/static/icons/logo.png">
+    <link rel="stylesheet" href="/static/cleanup_index.css?ts={{ time }}">
+    <style>
+ button.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== POPUP MODERN V4 ===== */
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 18px;
+  width: 880px;
+  max-width: 95%;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.recipe-modal-content {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+/* RIGHT SIDE — RECIPE LIST */
+.recipe-modal-right {
+  padding: 25px 30px 90px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.recipe-modal-right h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #2e7d32;
+  font-size: 1.3rem;
+}
+
+.recipes-scroll {
+  flex: 1;
+  overflow-y: auto;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 8px;
+  background: #f9f9f9;
+  max-height: 330px;
+}
+
+.recipe-option {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff;
+  margin: 6px 0;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  text-align: center;
+  border: 2px solid transparent;
+  font-size: 1rem;
+}
+
+.recipe-option:hover {
+  border-color: #ff9800;
+  color: #ff9800;
+  background: #fffef8;
+  transform: scale(1.02);
+}
+
+.recipe-option.active,
+.recipe-option.selected {
+  background: #ff9800;
+  color: #fff;
+  font-weight: 600;
+  border-color: #ff9800;
+}
+
+/* SAVE BUTTON — ORANGE */
+.save-btn {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 15px rgba(245, 124, 0, 0.35);
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 124, 0, 0.45);
+}
+
+/* === ACTIONS MENU (Dropdown fix FINAL) === */
+.actions-container {
+  position: relative;
+  display: inline-block;
+}
+
+.slot-actions-btn {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slot-actions-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 124, 0, 0.35);
+}
+
+/* Meniul dropdown */
+.actions-menu {
+  position: fixed; /* FIX CHEIE! — iese din overflow-ul tabelului */
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+  padding: 6px 0;
+  animation: fadeIn 0.15s ease;
+}
+
+.actions-menu.show {
+  display: flex;
+}
+
+.action-item {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.action-item:hover {
+  background: #f5f5f5;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+        body.bg {
+  overflow: hidden;
+  height: 100vh;
+}
+        /* === Flash Notice — bottom-left corner === */
+.flash-banner {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: linear-gradient(135deg, #ffa726, #fb8c00);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  font-weight: 600;
+  z-index: 9999;
+  font-size: 0.9rem;
+  animation: fadeOut 4s ease forwards;
+}
+
+/* Optional: fade out effect */
+@keyframes fadeOut {
+  0% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(10px); }
+}
+    </style>
+</head>
+<body class="bg" data-week="{{ plan.week }}" data-year="{{ plan.year }}">
+<header>
+    <div class="header-row">
+        <h1>M.P.M. Meal Planner</h1>
+        <div class="rec-info-banner" title="Nearest expiry recommendation">
+            💡 Use foods with nearest expiration date first!
+        </div>
+    </div>
+    <div id="recipes-json" data-recipes='{{ recipes | tojson | replace("'","&#39;") }}' style="display:none;"></div>
+</header>
+
+{% if notice_message %}
+<div class="flash-banner" id="flashNotice">{{ notice_message }}</div>
+{% endif %}
+
+{% set exp_count = expiring_soon|length if expiring_soon else 0 %}
+{% set low_count = low_stock_items|length if low_stock_items else 0 %}
+{% set total_alerts = exp_count + low_count %}
+
+{% if total_alerts > 0 %}
+<div class="alerts-entry" id="alertsEntryBar">
+    <button id="alertsMainBtn" class="alerts-toggle-btn" data-total="{{ total_alerts }}">
+         Show alerts ({{ total_alerts }})
+    </button>
+</div>
+
+<div id="alertsPanel" class="alerts-panel" aria-hidden="true">
+    <div class="alerts-header">
+        <div class="ah-left">
+            <strong>Alerts</strong>
+            <span class="total-badge" id="alertsPanelTotal">{{ total_alerts }}</span>
+        </div>
+        <div class="ah-right">
+            <button class="hide-all-btn" id="hideAlertsBtn" title="Hide alerts">×</button>
+        </div>
+    </div>
+    <div class="alerts-tabs" id="alertsTabs">
+        {% if exp_count > 0 %}
+        <button class="alerts-tab active" data-tab="expiring">Expiring <span class="tab-badge" id="expTabCount">{{ exp_count }}</span></button>
+        {% endif %}
+        {% if low_count > 0 %}
+        <button class="alerts-tab {% if exp_count == 0 %}active{% endif %}" data-tab="lowstock">Low stock <span class="tab-badge" id="lowTabCount">{{ low_count }}</span></button>
+        {% endif %}
+    </div>
+    <div class="alerts-content">
+        {% if exp_count > 0 %}
+        <div class="alerts-list" data-content="expiring" style="display:block;">
+            <div class="alerts-table-wrapper">
+                <table class="alerts-table">
+                    <thead><tr><th style="width:32px;"><input type="checkbox" id="expSelectAll" title="Select all" /></th><th>Name</th><th>Qty</th><th>Exp</th><th>Left</th></tr></thead>
+                    <tbody>
+                    {% for item in expiring_soon %}
+                        <tr data-name="{{ item.name }}" class="{% if item.days_left < 0 %}sev-expired{% elif item.days_left == 0 %}sev-0{% elif item.days_left == 1 %}sev-1{% else %}sev-23{% endif %}">
+                            <td><input type="checkbox" class="exp-select" data-name="{{ item.name }}" /></td>
+                            <td class="ex-name">{{ item.name }}</td>
+                            <td>{{ item.quantity }} {{ item.unit }}</td>
+                            <td>{{ item.exp }}</td>
+                            <td>
+                                {% if item.days_left < 0 %}Expired
+                                {% elif item.days_left == 0 %}Today
+                                {% elif item.days_left == 1 %}1 day
+                                {% else %}{{ item.days_left }} days
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% if low_count > 0 %}
+        <div class="alerts-list" data-content="lowstock" style="display:{% if exp_count == 0 %}block{% else %}none{% endif %};">
+            <div class="alerts-table-wrapper">
+                <table class="alerts-table">
+                    <thead><tr><th>Name</th><th>Qty</th><th>Thr</th><th>Tag</th></tr></thead>
+                    <tbody>
+                    {% for item in low_stock_items %}
+                        {% set ratio = (item.quantity / item.threshold) if item.threshold else 1 %}
+                        <tr class="{% if ratio <= 0.2 %}sev-0{% elif ratio <= 0.5 %}sev-1{% else %}sev-23{% endif %}">
+                            <td class="ex-name">{{ item.name }}</td>
+                            <td>{{ item.quantity }} {{ item.unit }}</td>
+                            <td>{{ item.threshold }} {{ item.unit }}</td>
+                            <td>{{ item.tag }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="alerts-footer">
+        <button id="bulkDeleteExp" class="mini-hide-btn" style="background:#c62828;" disabled>Delete selected</button>
+        <button id="hideBothBtn" class="mini-hide-btn">Hide both</button>
+    </div>
+</div>
+{% endif %}
+
+{% if nutrition %}
+<div class="stats-entry" id="statsEntryBar">
+    <button id="statsMainBtn" class="stats-toggle-btn">Show stats</button>
+</div>
+<div id="statsPanel" class="stats-panel" aria-hidden="true" data-week="{{ plan.week }}" data-year="{{ plan.year }}">
+  <div class="stats-header">
+    <div><strong>Nutrition</strong> <span class="stats-week-badge">Week W{{ plan.week }}</span></div>
+    <div style="display:flex; gap:6px; align-items:center;">
+        <button id="statsRefreshBtn" class="mini-hide-btn" title="Refresh now" style="background:#7b1fa2;">⟳</button>
+        <button class="hide-all-btn" id="hideStatsBtn" title="Hide stats">×</button>
+    </div>
+  </div>
+  <div class="stats-tabs">
+    <button class="stats-tab active" data-tab="week">Week</button>
+    <button class="stats-tab" data-tab="days">Days</button>
+  </div>
+  <div class="stats-content">
+     <div class="stats-view" data-content="week" style="display:block;">
+        <div class="stats-week-grid" id="statsWeekGrid">
+            <div class="metric"><span>Calories</span><strong id="stats-week-cal">{{ nutrition.week_totals.calories }}</strong></div>
+            <div class="metric"><span>Protein (g)</span><strong id="stats-week-pro">{{ nutrition.week_totals.protein }}</strong></div>
+            <div class="metric"><span>Carbs (g)</span><strong id="stats-week-carbs">{{ nutrition.week_totals.carbs }}</strong></div>
+            <div class="metric"><span>Fats (g)</span><strong id="stats-week-fats">{{ nutrition.week_totals.fats }}</strong></div>
+        </div>
+        <div id="statsWeekLoading" style="display:none; font-size:.65rem; margin-top:6px; color:#555;">Updating...</div>
+        <hr style="margin:14px 0;">
+        <small style="opacity:.75;">Values are sums of planned recipes (per serving) – cooked status not enforced.</small>
+     </div>
+     <div class="stats-view" data-content="days" style="display:none;">
+       <table class="stats-table" id="statsDaysTable">
+         <thead>
+           <tr><th>Day</th><th>Calories</th><th>Protein</th><th>Carbs</th><th>Fats</th></tr>
+         </thead>
+         <tbody id="statsDaysBody">
+           {% for day_name, day_obj in nutrition.days.items() %}
+             <tr data-day="{{ day_name }}">
+               <td class="sd-name">{{ day_name }}</td>
+               <td class="sd-cal">{{ day_obj.calories }}</td>
+               <td class="sd-pro">{{ day_obj.protein }}</td>
+               <td class="sd-carbs">{{ day_obj.carbs }}</td>
+               <td class="sd-fats">{{ day_obj.fats }}</td>
+             </tr>
+           {% endfor %}
+         </tbody>
+       </table>
+       <div id="statsDaysLoading" style="display:none; font-size:.65rem; margin-top:6px; color:#555;">Updating...</div>
+     </div>
+  </div>
+  <div class="stats-footer">
+    <label style="display:flex; align-items:center; gap:6px; font-size:.6rem; opacity:.8;">
+        <input type="checkbox" id="statsAutoRefresh" checked style="transform:scale(1.1);"> Auto refresh (30s)
+    </label>
+    <button id="hideStatsFooterBtn" class="mini-hide-btn">Hide</button>
+  </div>
+</div>
+{% endif %}
+
+<div class="overlay">
+    <div class="main-btns-row">
+        <a href="/recipes-page"><button class="main-btn">See all recipes</button></a>
+        <a href="/pantry"><button class="main-btn">My Pantry</button></a>
+        <a id="shoppingListLink" href="/shopping-list?week={{ plan.week }}"><button id="shoppingListBtn" class="main-btn">Shopping List <span id="shoppingListCount" class="badge" style="display:none;">0</span></button></a>
+    </div>
+
+    <div class="pantry-table" style="margin-top: 40px; max-width: none; width: 95%;">
+        <h2>Weekly Meal Schedule</h2>
+
+        <div class="week-controls">
+            <div style="display:flex; gap:10px;">
+                <button id="todayWeek" class="main-btn small">Today</button>
+            </div>
+
+            <div style="position: relative;">
+                <button id="weekDropdownBtn" onclick="toggleWeekDropdown()" class="main-btn small">
+                    <span id="weekDisplay"></span> ▼
+                </button>
+                <div id="weekDropdown">
+                    <div id="weekList"></div>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button id="resetWeek" class="main-btn small">Reset week</button>
+                <button id="randomizeWeek" class="main-btn small">Randomize</button>
+                <button id="availableRecipes" class="main-btn small">Available</button>
+                <button id="exportPDF" class="main-btn small">Export PDF</button>
+            </div>
+        </div>
+
+        <table id="mealTable">
+            <thead>
+            <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Calories per day</th>
+            </tr>
+            </thead>
+            <tbody id="mealTbody">
+            {% for day, meals in plan.meals.items() %}
+                <tr>
+                    <td id="{{day}}-label" style="text-align:center;">{{ day }} ({{ meals.date }})</td>
+                    {% for meal, recipe in meals.items() if meal != 'date' %}
+                        <td id="{{day}}-{{meal}}" style="text-align:center;" data-date="{{ meals.date }}">
+        <span id="slot-{{day}}-{{meal}}">
+        {% if meals[meal] == '-' %}-
+        {% elif meals[meal] is mapping and meals[meal].get('cooked') %}
+            <span style="color:#4caf50; font-weight:bold;">✓ {{ meals[meal].name }} (Cooked)</span>
+        {% else %}
+            <a href="/recipe/{{ meals[meal] | urlencode }}">{{ meals[meal] }}</a>
+        {% endif %}
+        </span>
+
+        {% if meals[meal] == '-' %}
+    <button type="button" class="add-btn" onclick="openModal('{{ day }}','{{ meal }}')">Add</button>
+{% elif meals[meal] is mapping and not meals[meal].get('cooked') %}
+    <div class="actions-container">
+        <button type="button" class="slot-actions-btn" data-day="{{day}}" data-meal="{{meal}}" data-date="{{ meals.date }}">Actions ▾</button>
+        <div class="actions-menu">
+            <div class="action-item" onclick="editMeal('{{ day }}','{{ meal }}')">Edit</div>
+            <div class="action-item" onclick="cookMeal('{{ day }}','{{ meal }}')">Cook</div>
+            <div class="action-item" onclick="deleteMeal('{{ day }}','{{ meal }}')">Delete</div>
+        </div>
+    </div>
+{% endif %}
+
+
+
+
+        <div id="{{day}}-{{meal}}-popup" class="popup" style="display:none;">
+            <div class="popup-content">
+              <span class="close" onclick="closeModal('{{day}}','{{meal}}')">&times;</span>
+              <form method="post" action="/update_meal" class="recipe-modal">
+                <input type="hidden" name="day" value="{{day}}">
+                <input type="hidden" name="meal" value="{{meal}}">
+                <input type="hidden" name="week" value="{{ plan.week }}">
+                <input type="hidden" name="year" value="{{ plan.year }}">
+                <div class="recipe-modal-content">
+                  <!-- LEFT: IMAGE -->
+                  <div class="recipe-modal-left">
+                    {% set current_recipe_name = meals[meal] if meals[meal] != '-' else '' %}
+                    {% set current_recipe = recipes | selectattr('name','equalto', current_recipe_name) | first %}
+                    {% if current_recipe and current_recipe.image %}
+                      <img id="recipePreview-{{day}}-{{meal}}"
+                           src="/static/pictures/{{ current_recipe.image }}"
+                           alt="{{ current_recipe.name }}"
+                           class="recipe-preview-large">
+                    {% else %}
+                      <div class="no-image-placeholder">
+                        <img src="/static/icons/logo.png" alt="No recipe" />
+                      </div>
+                    {% endif %}
+                    <div class="kcal-line" id="kcal-{{day}}-{{meal}}">
+                      {% if current_recipe and current_recipe.calories_per_serving %}
+                        <span><strong>{{ current_recipe.calories_per_serving }}</strong> kcal / serving</span>
+                      {% else %}
+                        <span class="muted">Calories/serving: —</span>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <!-- RIGHT: RECIPE LIST -->
+                  <div class="recipe-modal-right">
+                    <h3>Select recipe for <span>{{ day }}</span> – <span>{{ meal }}</span></h3>
+                    <div class="recipes-scroll">
+                      {% for r in recipes %}
+                      <div class="recipe-option"
+                           onclick="selectRecipe('{{ r.name }}','{{ r.image }}','{{day}}','{{meal}}')">
+                        {{ r.name }}
+                      </div>
+                      {% endfor %}
+                    </div>
+                    <input type="hidden" name="recipe" id="selectedRecipe-{{day}}-{{meal}}"
+                           value="{{ current_recipe.name if current_recipe else '' }}">
+                    <button type="submit" class="save-btn">Save Recipe</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+        </div>
+    </td>
+{% endfor %}
+                    {% set bname = meals.get('breakfast') %}
+                  {% set lname = meals.get('lunch') %}
+                  {% set dname = meals.get('dinner') %}
+                  {% set rb = (recipes | selectattr('name','equalto', bname) | first) if bname and bname != '-' else None %}
+                  {% set rl = (recipes | selectattr('name','equalto', lname) | first) if lname and lname != '-' else None %}
+                  {% set rd = (recipes | selectattr('name','equalto', dname) | first) if dname and dname != '-' else None %}
+                  {% set rb_cal = rb.calories_per_serving if rb and rb.calories_per_serving is not none else (rb.kalories_per_serving if rb and rb.kalories_per_serving is not none else 0) %}
+                  {% set rl_cal = rl.calories_per_serving if rl and rl.calories_per_serving is not none else (rl.kalories_per_serving if rl and rl.kalories_per_serving is not none else 0) %}
+                  {% set rd_cal = rd.calories_per_serving if rd and rd.calories_per_serving is not none else (rd.kalories_per_serving if rd and rd.kalories_per_serving is not none else 0) %}
+                  {% set kcal_total = rb_cal + rl_cal + rd_cal %}
+                  <td id="{{day}}-kcal" style="text-align:center;">{{ kcal_total }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="availableModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:4100; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:20px 22px 18px 22px; border-radius:20px; width:520px; max-width:95%; font-size:.8rem; box-shadow:0 10px 28px rgba(0,0,0,.35); max-height:80%; display:flex; flex-direction:column;">
+     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; font-size:1.2rem; color:var(--primary-green);">Available Recipes</h3>
+        <button id="availableClose" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-light);">&times;</button>
+     </div>
+     <div id="availableLoading" style="font-size:.65rem; color:#555; display:none;">Loading...</div>
+     <div id="availableError" style="font-size:.65rem; color:#c62828; display:none;">Error loading.</div>
+     <div style="overflow:auto; flex:1;" id="availableContent">
+        <table style="width:100%; border-collapse:collapse; font-size:.7rem;">
+          <thead>
+            <tr style="background:var(--primary-green); color:#fff;">
+              <th style="padding:8px 10px; text-align:left; border-radius:8px 0 0 0;">Name</th>
+              <th style="padding:8px 10px; text-align:right;">Servings</th>
+              <th style="padding:8px 10px; text-align:right;">Cal/serv</th>
+              <th style="padding:8px 10px; text-align:right; border-radius:0 8px 0 0;">Times</th>
+            </tr>
+          </thead>
+          <tbody id="availableTbody"></tbody>
+        </table>
+     </div>
+     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-size:.65rem;">
+        <span id="availableSummary" style="opacity:.75; color:var(--text-light);">&nbsp;</span>
+        <button id="availableCloseFooter" class="mini-hide-btn">Close</button>
+     </div>
+  </div>
+</div>
+
+<div id="advRandModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:4000; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:25px; border-radius:20px; width:450px; max-width:95%; font-size:.85rem; box-shadow:0 10px 28px rgba(0,0,0,.35);">
+     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; font-size:1.3rem; color:var(--primary-green);">Advanced Randomize</h3>
+        <button id="advRandClose" style="background:transparent; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-light);">&times;</button>
+     </div>
+     <form id="advRandForm">
+       <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:15px;">
+         {% for d in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] %}
+         <label style="display:flex; gap:6px; align-items:center; background:var(--light-gray); padding:10px 12px; border-radius:10px; cursor:pointer; transition:all 0.2s ease;">
+           <input type="checkbox" name="day" value="{{ d }}" class="ar-day" style="transform:scale(1.2);"> <span style="font-weight:500;">{{ d }}</span>
+         </label>
+         {% endfor %}
+       </div>
+       <div style="margin-bottom:12px;">
+         <label style="display:flex; align-items:center; gap:8px; background:var(--light-gray); padding:10px 12px; border-radius:10px; cursor:pointer;">
+           <input type="checkbox" id="arReplaceExisting" style="transform:scale(1.2);"> <span>Also replace already set (non-cooked) recipes</span>
+         </label>
+       </div>
+       <div style="margin-bottom:15px;">
+         <label style="display:flex; align-items:center; gap:8px; background:var(--light-gray); padding:10px 12px; border-radius:10px; cursor:pointer;">
+           <input type="checkbox" id="arOnlyAvailable" style="transform:scale(1.2);"> <span>Only available recipes (all ingredients)</span>
+         </label>
+       </div>
+       <div style="font-size:.7rem; line-height:1.5; background:#fff8e1; padding:12px; border:2px solid var(--primary-orange); border-radius:10px; margin-bottom:15px;">
+         <strong style="color:var(--dark-orange);">Rules:</strong><br>
+         • Past days and cooked slots are not modified<br>
+         • If no days selected, all future days are considered<br>
+         • Check option to re-randomize already populated slots
+       </div>
+       <div style="display:flex; justify-content:flex-end; gap:12px;">
+         <button type="button" id="advRandCancel" class="cancel-btn">Cancel</button>
+         <button type="submit" style="background:linear-gradient(135deg, var(--primary-green), var(--dark-green)); color:#fff; border:none; padding:10px 24px; border-radius:25px; cursor:pointer; font-weight:700; box-shadow:0 4px 15px rgba(46,125,50,0.3); transition:all 0.3s ease;">Run</button>
+       </div>
+     </form>
+  </div>
+</div>
+
+<div id="cookPanel" class="cook-panel" style="display:none;">
+  <div class="cook-panel-content">
+    <div class="cook-panel-header">
+      <h3 id="cookPanelTitle" style="margin:0; font-size:1.2rem;">👨‍🍳 Cook Recipe</h3>
+      <button id="cookPanelClose" class="close-btn" aria-label="Close">&times;</button>
+    </div>
+    <div id="cookPanelBody" class="cook-panel-body">
+      <div class="cook-ingredients-wrapper">
+        <table class="cook-ing-table">
+          <thead><tr><th>Ingredient</th><th style="width:90px;">Quantity</th><th style="width:55px;">Unit</th></tr></thead>
+          <tbody id="cookIngTbody"></tbody>
+        </table>
+      </div>
+      <div id="cookPanelMsg" class="cook-panel-msg" style="display:none;"></div>
+    </div>
+    <div class="cook-panel-footer">
+      <button id="cookPanelFinish" class="finish-btn">✓ Finished</button>
+      <button id="cookPanelCancel" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/script.js?ts={{ time }}"></script>
+<script src="/static/week_controls.js?ts={{ time }}"></script>
+<script src="/static/cleanup_index.js?ts={{ time }}"></script>
+</body>
+</html>

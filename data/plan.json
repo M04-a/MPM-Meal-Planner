@@ -1,0 +1,679 @@
+{
+  "2025-W39": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "Chicken Curry",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "Vegetable Stir Fry",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "Chicken Curry"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "Spaghetti Bolognese"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "Chicken Curry",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "Chicken Curry",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "Spaghetti Bolognese",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W40": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W43": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "Chicken Curry",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "Simple Hummus",
+      "dinner": "Spaghetti Bolognese"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": {
+        "name": "Tomato Soup",
+        "cooked": true,
+        "overrides": {
+          "Tomato": 6,
+          "Onion": 1,
+          "Garlic": 2,
+          "Vegetable stock": 500
+        },
+        "servings": 3,
+        "quantity": 3
+      },
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W42": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "Chicken Curry",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "Vegetable Stir Fry",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "Chicken Curry"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "Spaghetti Bolognese"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "Chicken Curry",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2026-W53": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W38": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W41": {
+    "Monday": {
+      "breakfast": "Shakshuka",
+      "lunch": "Pancakes",
+      "dinner": "Spaghetti Bolognese"
+    },
+    "Tuesday": {
+      "breakfast": "Spaghetti Carbonara",
+      "lunch": "Garlic Fried Rice",
+      "dinner": "Spaghetti Bolognese"
+    },
+    "Wednesday": {
+      "breakfast": "Spaghetti Bolognese",
+      "lunch": "Spaghetti Carbonara",
+      "dinner": "Shakshuka"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W36": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W37": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W45": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W47": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W49": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W52": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W46": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W48": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2026-W11": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W11": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  },
+  "2025-W44": {
+    "Monday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Tuesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Wednesday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Thursday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Friday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Saturday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    },
+    "Sunday": {
+      "breakfast": "-",
+      "lunch": "-",
+      "dinner": "-"
+    }
+  }
+}
